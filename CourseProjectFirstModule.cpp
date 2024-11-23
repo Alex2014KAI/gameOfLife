@@ -15,7 +15,6 @@ int main()
     int generation{ 1 }, aliveCells{ 1 };
     arrayOfTheUniverse = readingFile(row, column);
 
-    // readingTwoDimensionalArray(arrayOfTheUniverse, row, column);
 
     StateWorld(arrayOfTheUniverse, row, column, generation, aliveCells);
 
@@ -40,23 +39,35 @@ int** readingFile(int& row, int& column) {
         inputF >> column;
     };
 
+    if (row > 100) {
+        std::cout << "You entered a large number of strings into the array, it automatically changed to 100!" << std::endl;
+        row = 100;
+    };
+    
+    if (column > 100) {
+        std::cout << "You entered a large number of columns into the array, it automatically changed to 100!" << std::endl;
+        column = 100;
+    }
+
     int** array{ new int* [row] };
     for (int i{ 0 }; i < row; i++) {
         array[i] = new int[column] {0};
     }
 
-    /*for (int i{ 0 }; i < row; i++) {
-        for (int j{ 0 }; j < column; j++) {
-            inputF >> array[i][j];
-        };
-    };*/
-
     int coordinatesRow{ 0 }, coordinatesColumn{ 0 };
     while (true) {
         if (!(inputF >> coordinatesRow)) { break; };
         if (!(inputF >> coordinatesColumn)) { break; };
+        if (coordinatesRow >= row) {
+            std::cout << "Error. You entered incorrect data for a “live” cell along the y-axis, the value was assigned to the maximum row!" << std::endl;
+            coordinatesRow = row - 1;
+        };
+        if (coordinatesColumn >= column) {
+            std::cout << "Error.You entered incorrect data for a “live” cell along the x - axis, the value was assigned to the maximum column!" << std::endl;
+            coordinatesColumn = column - 1;
+        };
         array[static_cast<int>(coordinatesRow)][static_cast<int>(coordinatesColumn)] = 1;
-    }
+    };
     
 
     inputF.close();
