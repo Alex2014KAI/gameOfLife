@@ -14,6 +14,7 @@ void birthLife(int** array, int** prevArray, int row, int column); // In the fir
 void deathLife(int** array, int** prevArray, int row, int column); //  In the first argument based on the second argument "destroys life"
 int CalculationNumberLivingCells(int** const array, int row, int column); // Calculates the number of living cells
 
+
 int main()
 {
     int** arrayOfTheUniverse = FP_ZERO;
@@ -27,6 +28,10 @@ int main()
 
     while (true) {
 
+        if (EndGameLife(arrayOfTheUniverse, prevArrayOfTheUniverse, row, column, generation)) {
+           break;
+        };
+
         aliveCells = CalculationNumberLivingCells(arrayOfTheUniverse, row, column);
 
         copyingStateWorld(arrayOfTheUniverse, prevArrayOfTheUniverse, row, column);
@@ -34,10 +39,6 @@ int main()
         birthLife(arrayOfTheUniverse, prevArrayOfTheUniverse, row, column);
         deathLife(arrayOfTheUniverse, prevArrayOfTheUniverse, row, column);
         generation++;
-
-        if (EndGameLife(arrayOfTheUniverse, prevArrayOfTheUniverse, row, column, generation)) {
-            break;
-        };
 
         Sleep(1000);
     };
